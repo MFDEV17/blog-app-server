@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/blog_app_db
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+    show-sql: true
+
+jwt:
+  private.key: classpath:private.key
+  public.key: classpath:public.key
