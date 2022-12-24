@@ -52,19 +52,20 @@ public class UserService {
     return ResponseEntity.ok("Account has been activated!");
   }
 
-  @PreAuthorize("permitAll()")
+  @PreAuthorize("authentication.name.equals(#username) or " +
+          "hasAuthority('SCOPE_DELETE_OTHER_ACCOUNT')")
   public ResponseEntity<?> deleteUser(String username) {
     userRepository.deleteByUsername(username);
     return ResponseEntity.ok("User has been deleted");
   }
 
-  @PreAuthorize("permitAll()")
+  @PreAuthorize("hasAuthority('SCOPE_BAN_USER')")
   public ResponseEntity<?> banUser(String username) {
     userRepository.banUser(username);
     return ResponseEntity.ok("User has been banned.");
   }
 
-  @PreAuthorize("permitAll()")
+  @PreAuthorize("hasAnyAuthority('SCOPE_SET_USER_AUTHORITY')")
   public ResponseEntity<?> setUserRole(Role role, String username) {
     userRepository.updateRole(role, username);
     return ResponseEntity.ok("User permission has been updated.");

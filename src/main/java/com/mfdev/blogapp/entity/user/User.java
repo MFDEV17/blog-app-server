@@ -44,7 +44,7 @@ public class User {
   private String password;
 
   @Column(nullable = false)
-  private Boolean isEnable = false;
+  private Boolean isEnable = true;
 
   private String profileImage;
 
@@ -65,5 +65,23 @@ public class User {
     this.username = username;
     this.email = email;
     this.password = password;
+  }
+
+  public User(String username, String email, String password, Boolean isEnable, String firstName, String lastName, Role role) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.isEnable = isEnable;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+  }
+
+  public User(String username, String email, String password, Boolean isEnable, Role role) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.isEnable = isEnable;
+    this.role = role;
   }
 }
