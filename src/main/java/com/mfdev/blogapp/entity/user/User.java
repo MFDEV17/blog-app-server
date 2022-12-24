@@ -1,13 +1,12 @@
 package com.mfdev.blogapp.entity.user;
 
+import com.mfdev.blogapp.entity.user.authority.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
 
@@ -19,6 +18,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id", "username"})
+@DynamicUpdate
+@ToString
 public class User {
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -43,7 +44,7 @@ public class User {
   private String password;
 
   @Column(nullable = false)
-  private Boolean isEnable = true;
+  private Boolean isEnable = false;
 
   private String profileImage;
 
