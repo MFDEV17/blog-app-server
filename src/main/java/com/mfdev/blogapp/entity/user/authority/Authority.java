@@ -9,6 +9,7 @@ public enum Authority implements GrantedAuthority {
   DELETE_OTHER_BLOG,
   DELETE_OTHER_ACCOUNT,
   EDIT_OTHER_BLOG,
+  SET_USER_AUTHORITY,
   BAN_USER;
 
 

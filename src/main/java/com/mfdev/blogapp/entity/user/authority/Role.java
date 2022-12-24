@@ -12,7 +12,9 @@ public enum Role {
           EDIT_OTHER_BLOG,
           DELETE_OTHER_BLOG,
           BAN_USER,
-          DELETE_OTHER_COMMENT
+          DELETE_OTHER_COMMENT,
+          DELETE_OTHER_ACCOUNT,
+          SET_USER_AUTHORITY
   ));
 
   private final Set<Authority> permissions;
