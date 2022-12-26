@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.repository;
+package com.mfdev.blogapp.repository.blog;
 
 import com.mfdev.blogapp.entity.blog.Blog;
 import jakarta.transaction.Transactional;
