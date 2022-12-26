@@ -1,5 +1,6 @@
-package com.mfdev.blogapp.entity.blog;
+package com.mfdev.blogapp.entity.blog.rate;
 
+import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,7 +18,6 @@ public class BlogRate {
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
   private Long vote;
 
   @ManyToOne
@@ -25,4 +25,10 @@ public class BlogRate {
 
   @ManyToOne
   private User user;
+
+  public BlogRate(Long vote, Blog blog, User user) {
+    this.vote = vote;
+    this.blog = blog;
+    this.user = user;
+  }
 }
