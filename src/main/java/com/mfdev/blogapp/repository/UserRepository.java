@@ -47,4 +47,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query("update users u set u.isEnable = true where u.username = ?1")
   void activateAccount(String username);
+
+  @Query("select id from users where username = ?1")
+  Long getUserId(String username);
 }
