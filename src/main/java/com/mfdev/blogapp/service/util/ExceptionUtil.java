@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.exception.util;
+package com.mfdev.blogapp.service.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataIntegrityViolationException;

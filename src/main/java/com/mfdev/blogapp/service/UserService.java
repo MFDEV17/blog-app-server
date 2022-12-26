@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.mfdev.blogapp.exception.util.ExceptionUtil.uniqueExceptionHandler;
+import static com.mfdev.blogapp.service.util.ExceptionUtil.uniqueExceptionHandler;
 
 @Service
 @RequiredArgsConstructor
