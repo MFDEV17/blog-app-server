@@ -1,7 +1,7 @@
 package com.mfdev.blogapp.entity.blog;
 
-import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.mfdev.blogapp.entity.user.User;
+import com.mfdev.blogapp.service.util.enumconverter.JsonConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Map;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -22,9 +23,9 @@ public class Blog {
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
-  @JsonRawValue
-  @Column(columnDefinition = "json")
-  private String content;
+  @Convert(converter = JsonConverter.class)
+  @Column(columnDefinition = "text")
+  Map<String, Object> content;
 
   @CreationTimestamp
   private Date dateCreate;
@@ -34,4 +35,9 @@ public class Blog {
 
   @ManyToOne
   private User user;
+
+  public Blog(Map<String, Object> content, User user) {
+    this.content = content;
+    this.user = user;
+  }
 }
