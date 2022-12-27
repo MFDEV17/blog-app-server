@@ -23,4 +23,9 @@ public class LikeComment {
 
   @ManyToOne
   private User user;
+
+  public LikeComment(Comment comment, User user) {
+    this.comment = comment;
+    this.user = user;
+  }
 }
