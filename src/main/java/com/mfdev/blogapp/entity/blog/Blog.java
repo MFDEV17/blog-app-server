@@ -1,5 +1,7 @@
 package com.mfdev.blogapp.entity.blog;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mfdev.blogapp.entity.like.BlogLike;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.service.util.enumconverter.JsonConverter;
 import jakarta.persistence.*;
@@ -11,6 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -35,6 +38,14 @@ public class Blog {
 
   @ManyToOne
   private User user;
+
+  @OneToMany(mappedBy = "blog")
+  @JsonManagedReference
+  private Set<Comment> comments;
+
+  @OneToMany(mappedBy = "blog")
+  @JsonManagedReference
+  private Set<BlogLike> likes;
 
   public Blog(Map<String, Object> content, User user) {
     this.content = content;
