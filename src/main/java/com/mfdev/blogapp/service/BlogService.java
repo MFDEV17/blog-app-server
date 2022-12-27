@@ -2,6 +2,7 @@ package com.mfdev.blogapp.service;
 
 import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
 import com.mfdev.blogapp.dto.blog.RateBlogDTO;
+import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
 import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.user.User;
@@ -15,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -71,5 +74,10 @@ public class BlogService {
     }
 
     return ResponseEntity.badRequest().body("You already voted earlier");
+  }
+
+  @PreAuthorize("permitAll()")
+  public Collection<ShortBlogDTO> getUserBlogs(String username) {
+    return blogRepository.findAllByUserUsername(username);
   }
 }

@@ -1,13 +1,16 @@
 package com.mfdev.blogapp.repository.blog;
 
+import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.entity.blog.Blog;
 import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
+import java.util.Set;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Long> {
@@ -24,4 +27,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
   @Transactional
   @Query("delete from Blog where id = ?1")
   void deletePost(Long postId);
+
+  @EntityGraph(attributePaths = {"likes", "comments", "user"})
+  Set<ShortBlogDTO> findAllByUserUsername(String username);
 }

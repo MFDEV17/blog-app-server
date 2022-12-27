@@ -2,15 +2,17 @@ package com.mfdev.blogapp.controller;
 
 import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
 import com.mfdev.blogapp.dto.blog.RateBlogDTO;
+import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
 import com.mfdev.blogapp.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/blog")
 public class BlogController {
   private final BlogService blogService;
 
@@ -32,5 +34,10 @@ public class BlogController {
   @PostMapping("/vote")
   public ResponseEntity<?> voteForBlog(@RequestBody RateBlogDTO dto) {
     return blogService.setBlogRate(dto);
+  }
+
+  @GetMapping("/{username}")
+  public Collection<ShortBlogDTO> getAll(@PathVariable String username) {
+    return blogService.getUserBlogs(username);
   }
 }
