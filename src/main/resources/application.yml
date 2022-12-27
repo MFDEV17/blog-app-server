@@ -1,4 +1,7 @@
 spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
   datasource:
     url: jdbc:postgresql://localhost:5433/blog_app_db
 
