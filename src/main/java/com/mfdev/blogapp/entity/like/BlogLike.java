@@ -1,8 +1,10 @@
 package com.mfdev.blogapp.entity.like;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.user.User;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,14 +15,21 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"id"})
 public class BlogLike {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @ManyToOne
+  @JsonBackReference
   private Blog blog;
 
   @ManyToOne
   private User user;
+
+  public BlogLike(Blog blog, User user) {
+    this.blog = blog;
+    this.user = user;
+  }
 }

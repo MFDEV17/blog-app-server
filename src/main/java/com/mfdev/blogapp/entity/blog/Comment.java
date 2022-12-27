@@ -1,8 +1,11 @@
 package com.mfdev.blogapp.entity.blog;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.service.util.enumconverter.JsonConverter;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +21,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 public class Comment {
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -31,6 +35,7 @@ public class Comment {
   private User user;
 
   @ManyToOne
+  @JsonBackReference
   private Blog blog;
 
   @CreationTimestamp
@@ -38,4 +43,10 @@ public class Comment {
 
   @UpdateTimestamp
   private Date dateUpdate;
+
+  public Comment(Map<String, Object> comment, User user, Blog blog) {
+    this.comment = comment;
+    this.user = user;
+    this.blog = blog;
+  }
 }
