@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service.util;
+package com.mfdev.blogapp.util;
 
 import com.mfdev.blogapp.entity.blog.rate.RateType;
 import org.springframework.core.convert.converter.Converter;

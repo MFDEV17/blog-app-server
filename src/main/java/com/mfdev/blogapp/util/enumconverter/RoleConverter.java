@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service.util.enumconverter;
+package com.mfdev.blogapp.util.enumconverter;
 
 import com.mfdev.blogapp.entity.user.authority.Role;
 import org.springframework.core.convert.converter.Converter;
