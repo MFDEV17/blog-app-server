@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service;
+package com.mfdev.blogapp.service.blog;
 
 import com.mfdev.blogapp.dto.comment.CreateCommentDTO.CreateCommentDTO;
 import com.mfdev.blogapp.dto.comment.UpdateCommentDTO;

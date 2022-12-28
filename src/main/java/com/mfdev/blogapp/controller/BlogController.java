@@ -4,7 +4,7 @@ import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
 import com.mfdev.blogapp.dto.blog.RateBlogDTO;
 import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
-import com.mfdev.blogapp.service.BlogService;
+import com.mfdev.blogapp.service.blog.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

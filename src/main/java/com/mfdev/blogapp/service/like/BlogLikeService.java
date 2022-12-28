@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service;
+package com.mfdev.blogapp.service.like;
 
 import com.mfdev.blogapp.dto.bloglike.BlogLikeDTO;
 import com.mfdev.blogapp.repository.like.BlogLikeRepository;

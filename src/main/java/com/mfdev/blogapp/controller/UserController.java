@@ -4,7 +4,7 @@ import com.mfdev.blogapp.dto.user.UpdateRoleDTO;
 import com.mfdev.blogapp.dto.user.UpdateUserPasswordDTO;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.service.JwtGenerationService;
-import com.mfdev.blogapp.service.UserService;
+import com.mfdev.blogapp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;

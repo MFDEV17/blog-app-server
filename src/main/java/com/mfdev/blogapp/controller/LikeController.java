@@ -2,8 +2,8 @@ package com.mfdev.blogapp.controller;
 
 import com.mfdev.blogapp.dto.CommentLikeDTO;
 import com.mfdev.blogapp.dto.bloglike.BlogLikeDTO;
-import com.mfdev.blogapp.service.BlogLikeService;
-import com.mfdev.blogapp.service.CommentLikeService;
+import com.mfdev.blogapp.service.like.BlogLikeService;
+import com.mfdev.blogapp.service.like.CommentLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

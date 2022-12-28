@@ -2,7 +2,7 @@ package com.mfdev.blogapp.controller;
 
 import com.mfdev.blogapp.dto.comment.CreateCommentDTO.CreateCommentDTO;
 import com.mfdev.blogapp.dto.comment.UpdateCommentDTO;
-import com.mfdev.blogapp.service.CommentService;
+import com.mfdev.blogapp.service.blog.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

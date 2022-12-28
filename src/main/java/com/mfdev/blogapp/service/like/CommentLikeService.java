@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service;
+package com.mfdev.blogapp.service.like;
 
 import com.mfdev.blogapp.dto.CommentLikeDTO;
 import com.mfdev.blogapp.repository.UserRepository;
@@ -30,6 +30,7 @@ public class CommentLikeService {
   }
 
   private boolean isLikeExists(CommentLikeDTO dto) {
-    return commentLikeRepository.isLikeExists(dto.getCommentId(), securityUtil.getSessionUsername());
+    return commentLikeRepository
+            .isLikeExists(dto.getCommentId(), securityUtil.getSessionUsername());
   }
 }
