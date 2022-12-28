@@ -19,7 +19,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @EqualsAndHashCode(of = {"id", "username"})
 @DynamicUpdate
-@ToString
+@ToString(of = {"id", "username", "email"})
 public class User {
   @Id
   @GeneratedValue(strategy = IDENTITY)
