@@ -46,9 +46,16 @@ public class BlogService {
                   ".concat(T(com.mfdev.blogapp.entity.user.authority.Authority)" +
                   ".EDIT_OTHER_BLOG.name()))")
   public ResponseEntity<?> updateBlog(UpdateBlogDTO dto) {
-    blogRepository.updateBlog(dto.getContent(), dto.getBlogID());
+    if (blogRepository.existsById(dto.getBlogID())) {
+      blogRepository.updateBlog(dto.getContent(), dto.getBlogID());
 
-    return ResponseEntity.ok("Post has been edited");
+      return ResponseEntity.ok("Post has been edited");
+    }
+
+    return ResponseEntity
+            .badRequest()
+            .body("The post does not exist or has been deleted");
+
   }
 
   @PreAuthorize(
@@ -59,21 +66,35 @@ public class BlogService {
                   ".concat(T(com.mfdev.blogapp.entity.user.authority.Authority)" +
                   ".DELETE_OTHER_BLOG.name()))")
   public ResponseEntity<?> deleteBlog(Long blogID) {
-    blogRepository.deletePost(blogID);
-    return ResponseEntity.ok("Post has been deleted");
+    if (blogRepository.existsById(blogID)) {
+      blogRepository.deletePost(blogID);
+      return ResponseEntity.ok("Post has been deleted");
+    }
+
+    return ResponseEntity.badRequest()
+            .body("The post does not exist or has been deleted");
   }
 
   @PreAuthorize("isFullyAuthenticated()")
   public ResponseEntity<?> setBlogRate(RateBlogDTO dto) {
-    if (!blogRateRepository.checkVote(dto.getBlogID(), securityUtil.getSessionUsername())) {
-      Long userId = userRepository.getUserId(securityUtil.getSessionUsername());
+    if (!blogRateRepository.checkVote(
+            dto.getBlogID(),
+            securityUtil.getSessionUsername())) {
 
-      blogRateRepository.makeVote(dto.getRateType().getRate(), dto.getBlogID(), userId);
+      Long userId = userRepository
+              .getUserId(securityUtil.getSessionUsername());
+
+      blogRateRepository.makeVote(
+              dto.getRateType().getRate(),
+              dto.getBlogID(),
+              userId);
 
       return ResponseEntity.ok("Thanks for vote");
     }
 
-    return ResponseEntity.badRequest().body("You already voted earlier");
+    return ResponseEntity
+            .badRequest()
+            .body("You already voted earlier");
   }
 
   @PreAuthorize("permitAll()")
