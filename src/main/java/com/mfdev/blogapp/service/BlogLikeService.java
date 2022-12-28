@@ -3,7 +3,7 @@ package com.mfdev.blogapp.service;
 import com.mfdev.blogapp.dto.bloglike.BlogLikeDTO;
 import com.mfdev.blogapp.repository.like.BlogLikeRepository;
 import com.mfdev.blogapp.repository.UserRepository;
-import com.mfdev.blogapp.service.util.SecurityUtil;
+import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

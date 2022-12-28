@@ -5,7 +5,7 @@ import com.mfdev.blogapp.entity.user.authority.Role;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.repository.UserRepository;
 import com.mfdev.blogapp.repository.VerificationCodeRepository;
-import com.mfdev.blogapp.service.util.SecurityUtil;
+import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.mfdev.blogapp.service.util.ExceptionUtil.uniqueExceptionHandler;
+import static com.mfdev.blogapp.util.ExceptionUtil.uniqueExceptionHandler;
 
 @Service
 @RequiredArgsConstructor

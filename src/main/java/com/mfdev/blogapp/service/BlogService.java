@@ -7,7 +7,7 @@ import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
 import com.mfdev.blogapp.repository.UserRepository;
 import com.mfdev.blogapp.repository.blog.BlogRateRepository;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
-import com.mfdev.blogapp.service.util.SecurityUtil;
+import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
