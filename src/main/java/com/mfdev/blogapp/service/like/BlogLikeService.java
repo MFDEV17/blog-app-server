@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.service.like;
 
-import com.mfdev.blogapp.dto.bloglike.BlogLikeDTO;
+import com.mfdev.blogapp.dto.blog.bloglike.BlogLikeDTO;
 import com.mfdev.blogapp.repository.like.BlogLikeRepository;
 import com.mfdev.blogapp.repository.UserRepository;
 import com.mfdev.blogapp.util.SecurityUtil;
