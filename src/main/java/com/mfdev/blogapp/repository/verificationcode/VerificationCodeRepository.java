@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.repository.verificationcode;
 
-import com.mfdev.blogapp.entity.VerificationCode;
+import com.mfdev.blogapp.entity.verificationcode.VerificationCode;
 import com.mfdev.blogapp.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
