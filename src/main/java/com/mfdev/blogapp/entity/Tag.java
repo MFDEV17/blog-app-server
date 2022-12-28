@@ -5,11 +5,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
 
-import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static org.hibernate.annotations.OnDeleteAction.NO_ACTION;
 
 @Entity
 @NoArgsConstructor
@@ -24,5 +25,6 @@ public class Tag {
   private String name;
 
   @ManyToMany
+  @OnDelete(action = NO_ACTION)
   Set<Blog> blogs;
 }

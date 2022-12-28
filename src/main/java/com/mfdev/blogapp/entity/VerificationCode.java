@@ -7,11 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.UUID;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @Getter
@@ -27,7 +27,7 @@ public class VerificationCode {
   private UUID code;
 
   @OneToOne
-  @OnDelete(action = OnDeleteAction.CASCADE)
+  @OnDelete(action = CASCADE)
   private User user;
 
   public VerificationCode(UUID code, User user) {
