@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/blog")
 public class BlogController {
   private final BlogService blogService;
 
@@ -36,8 +38,13 @@ public class BlogController {
     return blogService.setBlogRate(dto);
   }
 
-  @GetMapping("/{username}")
-  public Collection<ShortBlogDTO> getAll(@PathVariable String username) {
-    return blogService.getUserBlogs(username);
+  @GetMapping("/{username}/{page}")
+  public Collection<ShortBlogDTO> getAllUserPosts(@PathVariable String username, @PathVariable Integer page) {
+    return blogService.getUserBlogs(username, page);
+  }
+
+  @GetMapping("/home/{path}")
+  public List<ShortBlogDTO> getHomepageBlogs(@PathVariable Integer path) {
+    return blogService.getHomePageBlogs(path);
   }
 }
