@@ -4,7 +4,7 @@ import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
 import com.mfdev.blogapp.dto.blog.RateBlogDTO;
 import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
-import com.mfdev.blogapp.repository.UserRepository;
+import com.mfdev.blogapp.repository.user.UserRepository;
 import com.mfdev.blogapp.repository.blog.BlogRateRepository;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
 import com.mfdev.blogapp.util.SecurityUtil;

@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.util;
 
-import com.mfdev.blogapp.repository.UserRepository;
+import com.mfdev.blogapp.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

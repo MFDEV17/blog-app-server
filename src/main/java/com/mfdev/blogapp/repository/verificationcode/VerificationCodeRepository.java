@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.repository;
+package com.mfdev.blogapp.repository.verificationcode;
 
 import com.mfdev.blogapp.entity.VerificationCode;
 import com.mfdev.blogapp.entity.user.User;

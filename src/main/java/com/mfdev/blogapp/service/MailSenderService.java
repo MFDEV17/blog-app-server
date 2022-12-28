@@ -2,7 +2,7 @@ package com.mfdev.blogapp.service;
 
 import com.mfdev.blogapp.entity.VerificationCode;
 import com.mfdev.blogapp.entity.user.User;
-import com.mfdev.blogapp.repository.VerificationCodeRepository;
+import com.mfdev.blogapp.repository.verificationcode.VerificationCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.ResponseEntity;

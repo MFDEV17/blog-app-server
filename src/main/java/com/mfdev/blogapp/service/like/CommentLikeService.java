@@ -1,7 +1,7 @@
 package com.mfdev.blogapp.service.like;
 
 import com.mfdev.blogapp.dto.comment.CommentLikeDTO;
-import com.mfdev.blogapp.repository.UserRepository;
+import com.mfdev.blogapp.repository.user.UserRepository;
 import com.mfdev.blogapp.repository.like.CommentLikeRepository;
 import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
