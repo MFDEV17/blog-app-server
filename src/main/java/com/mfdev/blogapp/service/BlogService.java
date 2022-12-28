@@ -4,20 +4,19 @@ import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
 import com.mfdev.blogapp.dto.blog.RateBlogDTO;
 import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
-import com.mfdev.blogapp.entity.blog.Blog;
-import com.mfdev.blogapp.entity.user.User;
+import com.mfdev.blogapp.repository.UserRepository;
 import com.mfdev.blogapp.repository.blog.BlogRateRepository;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
-import com.mfdev.blogapp.repository.UserRepository;
 import com.mfdev.blogapp.service.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +29,10 @@ public class BlogService {
 
   @PreAuthorize("isFullyAuthenticated()")
   public ResponseEntity<?> createBlog(CreateBlogDTO dto) {
-    User user = userRepository.findUserByUsername(securityUtil.getSessionUsername())
-            .orElseThrow(() -> new UsernameNotFoundException("Not found"));
-
-    blogRepository.save(new Blog(dto.getContent(), user));
+    blogRepository.saveBlogByUserId(
+            userRepository.getUserId(securityUtil.getSessionUsername()),
+            dto.getContent()
+    );
 
     return ResponseEntity.ok("Post has been created");
   }
@@ -98,7 +97,18 @@ public class BlogService {
   }
 
   @PreAuthorize("permitAll()")
-  public Collection<ShortBlogDTO> getUserBlogs(String username) {
-    return blogRepository.findAllByUserUsername(username);
+  public List<ShortBlogDTO> getUserBlogs(String username, Integer path) {
+    return blogRepository.findAllByUserUsername(
+            username,
+            PageRequest.of(
+                    path, 10,
+                    Sort.by("dateCreate").descending()
+            )
+    );
+  }
+
+  @PreAuthorize("permitAll()")
+  public List<ShortBlogDTO> getHomePageBlogs(Integer path) {
+    return blogRepository.findBy(PageRequest.of(path, 10));
   }
 }
