@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.entity;
+package com.mfdev.blogapp.entity.tag;
 
 import com.mfdev.blogapp.entity.blog.Blog;
 import jakarta.persistence.*;

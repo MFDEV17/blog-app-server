@@ -5,7 +5,7 @@ import com.mfdev.blogapp.entity.user.authority.Role;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.repository.user.UserRepository;
 import com.mfdev.blogapp.repository.verificationcode.VerificationCodeRepository;
-import com.mfdev.blogapp.service.MailSenderService;
+import com.mfdev.blogapp.service.mailsender.MailSenderService;
 import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

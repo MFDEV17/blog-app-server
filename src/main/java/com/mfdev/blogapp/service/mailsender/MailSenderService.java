@@ -1,6 +1,6 @@
-package com.mfdev.blogapp.service;
+package com.mfdev.blogapp.service.mailsender;
 
-import com.mfdev.blogapp.entity.VerificationCode;
+import com.mfdev.blogapp.entity.verificationcode.VerificationCode;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.repository.verificationcode.VerificationCodeRepository;
 import lombok.RequiredArgsConstructor;
