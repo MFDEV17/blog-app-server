@@ -39,7 +39,8 @@ public class BlogService {
 
   @PreAuthorize("isFullyAuthenticated()")
   public ResponseEntity<?> createBlog(CreateBlogDTO dto) {
-    User user = User.builder().id(securityUtil.getSessionUserId()).build();
+    User user = User.builder()
+            .id(securityUtil.getSessionUserId()).build();
 
     Long postId = blogRepository
             .save(new Blog(dto.getContent(), user))
@@ -57,7 +58,15 @@ public class BlogService {
                 String message = Objects.requireNonNull(e.getRootCause()).getMessage();
                 String existingTag = StringUtils.substringBetween(message, "=(", ")");
 
-                ids.add(tagRepository.findByName(existingTag).get().getId());
+                log.info("Existing key found: '{}'. Fetching id of tag...", existingTag);
+
+                Long tagId = tagRepository
+                        .findByName(existingTag)
+                        .get().getId();
+
+                log.info("Id of '{}' is {}. Inserting in ids list...", existingTag, tagId);
+
+                ids.add(tagId);
               }
             });
 
