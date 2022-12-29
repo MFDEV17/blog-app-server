@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.security.details;
 
-import com.mfdev.blogapp.repository.UserRepository;
+import com.mfdev.blogapp.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

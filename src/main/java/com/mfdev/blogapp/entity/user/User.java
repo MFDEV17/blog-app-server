@@ -20,6 +20,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @EqualsAndHashCode(of = {"id", "username"})
 @DynamicUpdate
 @ToString(of = {"id", "username", "email"})
+@Builder
+@AllArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = IDENTITY)

@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service;
+package com.mfdev.blogapp.service.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.entity;
+package com.mfdev.blogapp.entity.verificationcode;
 
 import com.mfdev.blogapp.entity.user.User;
 import jakarta.persistence.*;
