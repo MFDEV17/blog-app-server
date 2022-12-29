@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.security.details;
 
-import com.mfdev.blogapp.entity.user.User;
+import com.mfdev.blogapp.dto.user.LoginInfoUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-  private final User user;
+  private final LoginInfoUserDTO user;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

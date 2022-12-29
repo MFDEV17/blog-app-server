@@ -1,5 +1,6 @@
 package com.mfdev.blogapp.repository.user;
 
+import com.mfdev.blogapp.dto.user.LoginInfoUserDTO;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.entity.user.authority.Role;
 import jakarta.transaction.Transactional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findUserByUsername(String username);
+  Optional<LoginInfoUserDTO> findUserByUsername(String username);
 
   @Modifying
   @Transactional
