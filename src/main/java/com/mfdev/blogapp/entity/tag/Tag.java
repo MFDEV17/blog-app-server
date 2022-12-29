@@ -1,14 +1,12 @@
 package com.mfdev.blogapp.entity.tag;
 
-import com.mfdev.blogapp.entity.blog.Blog;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-
-import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static org.hibernate.annotations.OnDeleteAction.NO_ACTION;
 
 @Entity
 @NoArgsConstructor
