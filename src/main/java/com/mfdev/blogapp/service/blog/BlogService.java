@@ -4,19 +4,28 @@ import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
 import com.mfdev.blogapp.dto.blog.RateBlogDTO;
 import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
 import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
-import com.mfdev.blogapp.repository.UserRepository;
+import com.mfdev.blogapp.entity.blog.Blog;
+import com.mfdev.blogapp.entity.tag.Tag;
+import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.repository.blog.BlogRateRepository;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
+import com.mfdev.blogapp.repository.tag.TagRepository;
+import com.mfdev.blogapp.repository.user.UserRepository;
 import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +35,34 @@ public class BlogService {
   private final BlogRepository blogRepository;
   private final UserRepository userRepository;
   private final BlogRateRepository blogRateRepository;
+  private final TagRepository tagRepository;
 
   @PreAuthorize("isFullyAuthenticated()")
   public ResponseEntity<?> createBlog(CreateBlogDTO dto) {
-    blogRepository.saveBlogByUserId(
-            userRepository.getUserId(securityUtil.getSessionUsername()),
-            dto.getContent()
-    );
+    User user = User.builder().id(securityUtil.getSessionUserId()).build();
+
+    Long postId = blogRepository
+            .save(new Blog(dto.getContent(), user))
+            .getId();
+
+    Set<Long> ids = new HashSet<>();
+
+    dto.getTags()
+            .parallelStream()
+            .forEach(tag -> {
+              try {
+                ids.add(tagRepository
+                        .save(new Tag(tag.getName())).getId());
+              } catch (DataIntegrityViolationException e) {
+                String message = Objects.requireNonNull(e.getRootCause()).getMessage();
+                String existingTag = StringUtils.substringBetween(message, "=(", ")");
+
+                ids.add(tagRepository.findByName(existingTag).get().getId());
+              }
+            });
+
+    ids.parallelStream()
+            .forEach(id -> tagRepository.addTagToBlog(postId, id));
 
     return ResponseEntity.ok("Post has been created");
   }

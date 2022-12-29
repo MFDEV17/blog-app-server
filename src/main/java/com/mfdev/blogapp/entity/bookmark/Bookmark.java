@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.entity;
+package com.mfdev.blogapp.entity.bookmark;
 
 import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.user.User;
@@ -30,4 +30,9 @@ public class Bookmark {
   @ManyToOne
   @OnDelete(action = CASCADE)
   private Blog blog;
+
+  public Bookmark(User user, Blog blog) {
+    this.user = user;
+    this.blog = blog;
+  }
 }
