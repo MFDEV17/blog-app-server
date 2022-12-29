@@ -2,6 +2,7 @@ package com.mfdev.blogapp.entity.blog;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mfdev.blogapp.entity.like.BlogLike;
+import com.mfdev.blogapp.entity.tag.Tag;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.util.enumconverter.JsonConverter;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -46,6 +48,9 @@ public class Blog {
   @OneToMany(mappedBy = "blog")
   @JsonManagedReference
   private Set<BlogLike> likes;
+
+  @ManyToMany(cascade = ALL)
+  private Set<Tag> tags;
 
   public Blog(Map<String, Object> content, User user) {
     this.content = content;

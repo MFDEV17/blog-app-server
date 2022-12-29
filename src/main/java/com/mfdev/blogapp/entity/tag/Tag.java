@@ -2,9 +2,7 @@ package com.mfdev.blogapp.entity.tag;
 
 import com.mfdev.blogapp.entity.blog.Blog;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 
 import java.util.Set;
@@ -16,6 +14,9 @@ import static org.hibernate.annotations.OnDeleteAction.NO_ACTION;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(of = "name")
 public class Tag {
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -24,7 +25,7 @@ public class Tag {
   @Column(nullable = false, unique = true)
   private String name;
 
-  @ManyToMany
-  @OnDelete(action = NO_ACTION)
-  Set<Blog> blogs;
+  public Tag(String name) {
+    this.name = name;
+  }
 }
