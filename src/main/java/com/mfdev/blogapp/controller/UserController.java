@@ -8,9 +8,7 @@ import com.mfdev.blogapp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -48,8 +46,8 @@ public class UserController {
   }
 
   @PutMapping("/set-role")
-  public ResponseEntity<?> setUserRole(@RequestBody UpdateRoleDTO params) {
-    return userService.setUserRole(params.getRole(), params.getUsername());
+  public ResponseEntity<?> setUserRole(@RequestBody UpdateRoleDTO dto) {
+    return userService.setUserRole(dto.getRole(), dto.getUsername());
   }
 
   @PutMapping("/update-password")
@@ -60,11 +58,5 @@ public class UserController {
   @PutMapping("/update-email/{email}")
   public ResponseEntity<?> updateEmail(@PathVariable String email) {
     return userService.editEmail(email);
-  }
-
-  @GetMapping("/hello")
-  @PreAuthorize("permitAll()")
-  public String hello(JwtAuthenticationToken auth) {
-    return "Hello, " + auth.getName();
   }
 }
