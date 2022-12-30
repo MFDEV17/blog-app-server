@@ -11,10 +11,17 @@ public class SecurityUtil {
   private final UserRepository userRepository;
 
   public String getSessionUsername() {
-    return SecurityContextHolder.getContext().getAuthentication().getName();
+    return SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getName();
   }
 
   public Long getSessionUserId() {
-    return userRepository.getUserId(getSessionUsername());
+    String username = SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getName();
+    return userRepository.getUserId(username);
   }
 }
