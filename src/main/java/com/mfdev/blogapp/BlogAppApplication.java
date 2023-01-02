@@ -11,7 +11,7 @@ import com.mfdev.blogapp.repository.user.UserRepository;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
 import com.mfdev.blogapp.repository.like.BlogLikeRepository;
 import com.mfdev.blogapp.repository.like.CommentLikeRepository;
-import com.mfdev.blogapp.util.enumconverter.JsonConverter;
+import com.mfdev.blogapp.util.converter.JsonConverter;
 import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
