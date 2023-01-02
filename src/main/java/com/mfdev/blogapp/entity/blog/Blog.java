@@ -1,10 +1,12 @@
 package com.mfdev.blogapp.entity.blog;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mfdev.blogapp.entity.blog.rate.BlogRate;
+import com.mfdev.blogapp.entity.bookmark.Bookmark;
 import com.mfdev.blogapp.entity.like.BlogLike;
 import com.mfdev.blogapp.entity.tag.Tag;
 import com.mfdev.blogapp.entity.user.User;
-import com.mfdev.blogapp.util.enumconverter.JsonConverter;
+import com.mfdev.blogapp.util.converter.JsonConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,6 +53,14 @@ public class Blog {
 
   @ManyToMany(cascade = ALL)
   private Set<Tag> tags;
+
+  @OneToMany(mappedBy = "blog")
+  @JsonManagedReference
+  private Set<Bookmark> bookmarks;
+
+  @OneToMany(mappedBy = "blog")
+  @JsonManagedReference
+  private Set<BlogRate> rating;
 
   public Blog(Map<String, Object> content, User user) {
     this.content = content;

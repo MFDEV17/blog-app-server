@@ -1,9 +1,6 @@
 package com.mfdev.blogapp.service.blog;
 
-import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
-import com.mfdev.blogapp.dto.blog.RateBlogDTO;
-import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
-import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
+import com.mfdev.blogapp.dto.blog.*;
 import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.tag.Tag;
 import com.mfdev.blogapp.entity.user.User;
@@ -22,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -61,8 +55,7 @@ public class BlogService {
                 log.info("Existing key found: '{}'. Fetching id of tag...", existingTag);
 
                 Long tagId = tagRepository
-                        .findByName(existingTag)
-                        .get().getId();
+                        .findByName(existingTag).get().getId();
 
                 log.info("Id of '{}' is {}. Inserting in ids list...", existingTag, tagId);
 
@@ -149,5 +142,10 @@ public class BlogService {
   @PreAuthorize("permitAll()")
   public List<ShortBlogDTO> getHomePageBlogs(Integer path) {
     return blogRepository.findBy(PageRequest.of(path, 10));
+  }
+
+  @PreAuthorize("permitAll()")
+  public FullBlogDTO getBlog(Long blogId) {
+    return blogRepository.findBlogById(blogId);
   }
 }

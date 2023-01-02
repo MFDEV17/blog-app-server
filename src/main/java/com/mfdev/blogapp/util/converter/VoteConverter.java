@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.util.enumconverter;
+package com.mfdev.blogapp.util.converter;
 
 import com.mfdev.blogapp.entity.blog.rate.RateType;
 import org.springframework.core.convert.converter.Converter;
