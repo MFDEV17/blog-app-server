@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.util.enumconverter;
+package com.mfdev.blogapp.util.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

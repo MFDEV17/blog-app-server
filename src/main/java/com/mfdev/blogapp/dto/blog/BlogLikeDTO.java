@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.dto.blog.bloglike;
+package com.mfdev.blogapp.dto.blog;
 
 import lombok.Getter;
 import lombok.Setter;

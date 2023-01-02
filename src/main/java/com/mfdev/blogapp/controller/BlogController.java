@@ -1,9 +1,6 @@
 package com.mfdev.blogapp.controller;
 
-import com.mfdev.blogapp.dto.blog.CreateBlogDTO;
-import com.mfdev.blogapp.dto.blog.RateBlogDTO;
-import com.mfdev.blogapp.dto.blog.ShortBlogDTO;
-import com.mfdev.blogapp.dto.blog.UpdateBlogDTO;
+import com.mfdev.blogapp.dto.blog.*;
 import com.mfdev.blogapp.service.blog.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +43,10 @@ public class BlogController {
   @GetMapping("/home/{path}")
   public List<ShortBlogDTO> getHomepageBlogs(@PathVariable Integer path) {
     return blogService.getHomePageBlogs(path);
+  }
+
+  @GetMapping("/{blogId}")
+  public FullBlogDTO getBlog(@PathVariable Long blogId) {
+    return blogService.getBlog(blogId);
   }
 }
