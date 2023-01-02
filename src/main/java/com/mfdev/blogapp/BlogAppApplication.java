@@ -11,7 +11,7 @@ import com.mfdev.blogapp.repository.user.UserRepository;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
 import com.mfdev.blogapp.repository.like.BlogLikeRepository;
 import com.mfdev.blogapp.repository.like.CommentLikeRepository;
-import com.mfdev.blogapp.util.enumconverter.JsonConverter;
+import com.mfdev.blogapp.util.converter.JsonConverter;
 import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -76,7 +76,7 @@ public class BlogAppApplication {
         for (int i = 0; i < 100; i++) {
           comments.add(new Comment(
                   converter
-                          .convertToEntityAttribute(faker.expression("#{json 'comment', '#{json ''comment'', ''lorem ipsum comment comment comment''}'}")),
+                          .convertToEntityAttribute(faker.expression("'#{json ''comment'',''comment for post''")),
                   users.get(random.ints(0, users.size()).findFirst().getAsInt()),
                   blogs.get(random.ints(0, blogs.size()).findFirst().getAsInt())));
         }
