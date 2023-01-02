@@ -1,9 +1,8 @@
-package com.mfdev.blogapp.util.enumconverter;
+package com.mfdev.blogapp.util.converter;
 
 import com.mfdev.blogapp.entity.user.authority.Role;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class RoleConverter implements Converter<String, Role> {
