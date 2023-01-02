@@ -1,5 +1,6 @@
 package com.mfdev.blogapp.entity.bookmark;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.user.User;
 import jakarta.persistence.Entity;
@@ -29,10 +30,6 @@ public class Bookmark {
 
   @ManyToOne
   @OnDelete(action = CASCADE)
+  @JsonBackReference
   private Blog blog;
-
-  public Bookmark(User user, Blog blog) {
-    this.user = user;
-    this.blog = blog;
-  }
 }

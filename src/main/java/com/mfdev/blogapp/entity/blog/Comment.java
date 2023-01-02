@@ -2,7 +2,7 @@ package com.mfdev.blogapp.entity.blog;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mfdev.blogapp.entity.user.User;
-import com.mfdev.blogapp.util.enumconverter.JsonConverter;
+import com.mfdev.blogapp.util.converter.JsonConverter;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
