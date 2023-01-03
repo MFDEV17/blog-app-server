@@ -1,5 +1,6 @@
 package com.mfdev.blogapp.dto.blog;
 
+import com.mfdev.blogapp.entity.tag.Tag;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
@@ -12,6 +13,8 @@ public interface FullBlogDTO {
   Set<ShortComment> getComments();
 
   Map<String, Object> getContent();
+
+  Set<Tag> getTags();
 
   @Value("#{target.likes.size()}")
   Long getLikeCount();
