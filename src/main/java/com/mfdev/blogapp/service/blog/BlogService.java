@@ -151,8 +151,8 @@ public class BlogService {
   }
 
   @PreAuthorize("permitAll()")
-  public List<ShortBlogDTO> findBlogsByTags(Set<String> tags) {
+  public List<ShortBlogDTO> findBlogsByTags(Set<String> tags, Integer path) {
     Set<Long> idsTags = tagRepository.findIdsTags(tags);
-    return blogRepository.findAllByTagsIdIn(idsTags);
+    return blogRepository.findAllByTagsIdIn(idsTags, PageRequest.of(path, 10));
   }
 }

@@ -37,7 +37,9 @@ public class BlogController {
   }
 
   @GetMapping("/{username}/{page}")
-  public Collection<ShortBlogDTO> getAllUserPosts(@PathVariable String username, @PathVariable Integer page) {
+  public Collection<ShortBlogDTO> getAllUserPosts(
+          @PathVariable String username,
+          @PathVariable Integer page) {
     return blogService.getUserBlogs(username, page);
   }
 
@@ -51,8 +53,10 @@ public class BlogController {
     return blogService.getBlog(blogId);
   }
 
-  @GetMapping("/find/by/tags")
-  public List<ShortBlogDTO> findBlogsByTags(@RequestBody Set<String> tags) {
-    return blogService.findBlogsByTags(tags);
+  @GetMapping("/find/by/tags/{path}")
+  public List<ShortBlogDTO> findBlogsByTags(
+          @RequestBody Set<String> tags,
+          @PathVariable Integer path) {
+    return blogService.findBlogsByTags(tags, path);
   }
 }

@@ -53,5 +53,5 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
   FullBlogDTO findBlogById(Long id);
 
   @EntityGraph(attributePaths = {"likes", "comments", "user", "tags"})
-  List<ShortBlogDTO> findAllByTagsIdIn(Collection<Long> tagsIds);
+  List<ShortBlogDTO> findAllByTagsIdIn(Collection<Long> tagsIds, Pageable pageable);
 }
