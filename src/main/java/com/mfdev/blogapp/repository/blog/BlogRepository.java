@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +51,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
           "tags"
   })
   FullBlogDTO findBlogById(Long id);
+
+  @EntityGraph(attributePaths = {"likes", "comments", "user", "tags"})
+  List<ShortBlogDTO> findAllByTagsIdIn(Collection<Long> tagsIds);
 }

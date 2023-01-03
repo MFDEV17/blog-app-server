@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,5 +49,10 @@ public class BlogController {
   @GetMapping("/{blogId}")
   public FullBlogDTO getBlog(@PathVariable Long blogId) {
     return blogService.getBlog(blogId);
+  }
+
+  @GetMapping("/find/by/tags")
+  public List<ShortBlogDTO> findBlogsByTags(@RequestBody Set<String> tags) {
+    return blogService.findBlogsByTags(tags);
   }
 }

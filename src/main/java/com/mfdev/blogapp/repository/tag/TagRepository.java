@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
@@ -17,4 +18,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   void addTagToBlog(Long blogId, Long tagId);
 
   Optional<Tag> findByName(String name);
+
+  @Query("select t.id from Tag t where t.name in (?1)")
+  Set<Long> findIdsTags(Set<String> tags);
 }

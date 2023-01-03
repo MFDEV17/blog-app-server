@@ -19,7 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +46,6 @@ public class BlogService {
     Set<Long> ids = new HashSet<>();
 
     dto.getTags()
-            .parallelStream()
             .forEach(tag -> {
               try {
                 ids.add(tagRepository
@@ -63,8 +65,7 @@ public class BlogService {
               }
             });
 
-    ids.parallelStream()
-            .forEach(id -> tagRepository.addTagToBlog(postId, id));
+    ids.forEach(id -> tagRepository.addTagToBlog(postId, id));
 
     return ResponseEntity.ok("Post has been created");
   }
@@ -147,5 +148,11 @@ public class BlogService {
   @PreAuthorize("permitAll()")
   public FullBlogDTO getBlog(Long blogId) {
     return blogRepository.findBlogById(blogId);
+  }
+
+  @PreAuthorize("permitAll()")
+  public List<ShortBlogDTO> findBlogsByTags(Set<String> tags) {
+    Set<Long> idsTags = tagRepository.findIdsTags(tags);
+    return blogRepository.findAllByTagsIdIn(idsTags);
   }
 }
