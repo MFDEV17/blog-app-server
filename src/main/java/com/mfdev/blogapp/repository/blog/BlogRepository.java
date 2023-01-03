@@ -38,6 +38,16 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
   @EntityGraph(attributePaths = {"likes", "comments", "user"})
   List<ShortBlogDTO> findBy(Pageable pageable);
 
-  @EntityGraph(attributePaths = {"comments", "comments.user", "user", "likes", "likes.user", "bookmarks", "bookmarks.user", "bookmarks.blog"})
+  @EntityGraph(attributePaths = {
+          "comments",
+          "comments.user",
+          "user",
+          "likes",
+          "likes.user",
+          "bookmarks",
+          "bookmarks.user",
+          "bookmarks.blog",
+          "tags"
+  })
   FullBlogDTO findBlogById(Long id);
 }
