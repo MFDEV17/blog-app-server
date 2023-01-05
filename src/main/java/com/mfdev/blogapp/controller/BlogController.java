@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,7 +37,9 @@ public class BlogController {
   }
 
   @GetMapping("/{username}/{page}")
-  public Collection<ShortBlogDTO> getAllUserPosts(@PathVariable String username, @PathVariable Integer page) {
+  public Collection<ShortBlogDTO> getAllUserPosts(
+          @PathVariable String username,
+          @PathVariable Integer page) {
     return blogService.getUserBlogs(username, page);
   }
 
@@ -48,5 +51,12 @@ public class BlogController {
   @GetMapping("/{blogId}")
   public FullBlogDTO getBlog(@PathVariable Long blogId) {
     return blogService.getBlog(blogId);
+  }
+
+  @GetMapping("/find/by/tags/{path}")
+  public List<ShortBlogDTO> findBlogsByTags(
+          @RequestBody Set<String> tags,
+          @PathVariable Integer path) {
+    return blogService.findBlogsByTags(tags, path);
   }
 }
