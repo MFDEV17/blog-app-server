@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.service.blog;
 
-import com.mfdev.blogapp.dto.comment.CreateCommentDTO.CreateCommentDTO;
+import com.mfdev.blogapp.dto.comment.CreateCommentDTO;
 import com.mfdev.blogapp.dto.comment.UpdateCommentDTO;
 import com.mfdev.blogapp.repository.comment.CommentRepository;
 import com.mfdev.blogapp.util.SecurityUtil;

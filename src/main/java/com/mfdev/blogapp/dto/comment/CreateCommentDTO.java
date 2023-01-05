@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.dto.comment.CreateCommentDTO;
+package com.mfdev.blogapp.dto.comment;
 
 import lombok.Getter;
 import lombok.Setter;

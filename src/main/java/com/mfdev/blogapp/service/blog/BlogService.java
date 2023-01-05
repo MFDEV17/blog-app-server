@@ -48,8 +48,7 @@ public class BlogService {
     dto.getTags()
             .forEach(tag -> {
               try {
-                ids.add(tagRepository
-                        .save(new Tag(tag.getName())).getId());
+                ids.add(tagRepository.save(new Tag(tag.getName())).getId());
               } catch (DataIntegrityViolationException e) {
                 String message = Objects.requireNonNull(e.getRootCause()).getMessage();
                 String existingTag = StringUtils.substringBetween(message, "=(", ")");

@@ -8,9 +8,7 @@ import com.mfdev.blogapp.entity.tag.Tag;
 import com.mfdev.blogapp.entity.user.User;
 import com.mfdev.blogapp.util.converter.JsonConverter;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,6 +23,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(of = {"id"})
 public class Blog {
   @Id
   @GeneratedValue(strategy = IDENTITY)

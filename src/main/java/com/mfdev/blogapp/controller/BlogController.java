@@ -53,7 +53,7 @@ public class BlogController {
     return blogService.getBlog(blogId);
   }
 
-  @GetMapping("/find/by/tags/{path}")
+  @GetMapping("/find-by/tags/{path}")
   public List<ShortBlogDTO> findBlogsByTags(
           @RequestBody Set<String> tags,
           @PathVariable Integer path) {

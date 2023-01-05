@@ -1,6 +1,6 @@
 package com.mfdev.blogapp.controller;
 
-import com.mfdev.blogapp.dto.comment.CreateCommentDTO.CreateCommentDTO;
+import com.mfdev.blogapp.dto.comment.CreateCommentDTO;
 import com.mfdev.blogapp.dto.comment.UpdateCommentDTO;
 import com.mfdev.blogapp.service.blog.CommentService;
 import lombok.RequiredArgsConstructor;
