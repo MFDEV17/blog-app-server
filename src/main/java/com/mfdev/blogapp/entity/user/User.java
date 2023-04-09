@@ -9,19 +9,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "users")
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id", "username"})
 @DynamicUpdate
 @ToString(of = {"id", "username", "email"})
-@Builder
-@AllArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -59,31 +58,30 @@ public class User {
 
   private String profileDescription;
 
-  @Enumerated(value = STRING)
-  @Column(nullable = false)
-  private Role role = Role.USER;
+  @ElementCollection
+  @Enumerated(value = EnumType.STRING)
+  private Set<Role> role = new HashSet<>(Set.of(Role.USER));
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, Set<Role> role) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.role = role;
   }
 
-  public User(String username, String email, String password, Boolean isEnable, String firstName, String lastName, Role role) {
+  public User(String username, String email, String password, Boolean isEnable, String firstName, String lastName) {
     this.username = username;
     this.email = email;
     this.password = password;
     this.isEnable = isEnable;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.role = role;
   }
 
-  public User(String username, String email, String password, Boolean isEnable, Role role) {
+  public User(String username, String email, String password, Boolean isEnable) {
     this.username = username;
     this.email = email;
     this.password = password;
     this.isEnable = isEnable;
-    this.role = role;
   }
 }
