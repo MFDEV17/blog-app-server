@@ -30,10 +30,7 @@ public class User {
   private String username;
 
   @Column(unique = true, nullable = false)
-  @Email(
-          message = "Invalid email",
-          regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$"
-  )
+  @Email(regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")
   private String email;
 
   @Column(nullable = false)
@@ -45,7 +42,7 @@ public class User {
   private String password;
 
   @Column(nullable = false)
-  private Boolean isEnable = true;
+  private Boolean isEnable = false;
 
   private String profileImage;
 
@@ -61,27 +58,4 @@ public class User {
   @ElementCollection
   @Enumerated(value = EnumType.STRING)
   private Set<Role> role = new HashSet<>(Set.of(Role.USER));
-
-  public User(String username, String email, String password, Set<Role> role) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.role = role;
-  }
-
-  public User(String username, String email, String password, Boolean isEnable, String firstName, String lastName) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.isEnable = isEnable;
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  public User(String username, String email, String password, Boolean isEnable) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.isEnable = isEnable;
-  }
 }
