@@ -2,7 +2,7 @@ package com.mfdev.blogapp.controller;
 
 import com.mfdev.blogapp.dto.requestdto.user.RegistrationDto;
 import com.mfdev.blogapp.dto.requestdto.user.UpdateAccountInfoDto;
-import com.mfdev.blogapp.service.user.AccountService;
+import com.mfdev.blogapp.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
