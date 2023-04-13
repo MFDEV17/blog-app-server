@@ -14,7 +14,11 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BlogRate {
+@Entity
+@Table(indexes = {
+        @Index(columnList = "blog_id, user_id", unique = true)
+})
+public class Rating {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
