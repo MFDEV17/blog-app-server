@@ -1,4 +1,4 @@
-package com.mfdev.blogapp.service.user;
+package com.mfdev.blogapp.service.account;
 
 import com.mfdev.blogapp.dto.requestdto.user.RegistrationDto;
 import com.mfdev.blogapp.dto.requestdto.user.UpdateAccountInfoDto;
