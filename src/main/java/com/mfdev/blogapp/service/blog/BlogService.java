@@ -1,101 +1,83 @@
 package com.mfdev.blogapp.service.blog;
 
-import com.mfdev.blogapp.dto.blog.*;
+import com.mfdev.blogapp.dto.dbqueryprojection.FullBlogProjection;
+import com.mfdev.blogapp.dto.dbqueryprojection.ShortBlogProjection;
+import com.mfdev.blogapp.dto.requestdto.blog.*;
 import com.mfdev.blogapp.entity.blog.Blog;
+import com.mfdev.blogapp.entity.blog.rate.RateType;
 import com.mfdev.blogapp.entity.tag.Tag;
-import com.mfdev.blogapp.entity.user.User;
-import com.mfdev.blogapp.repository.blog.BlogRateRepository;
+import com.mfdev.blogapp.mapper.blog.BlogMapper;
+import com.mfdev.blogapp.mapper.rate.RateMapper;
 import com.mfdev.blogapp.repository.blog.BlogRepository;
+import com.mfdev.blogapp.repository.rating.RatingRepository;
 import com.mfdev.blogapp.repository.tag.TagRepository;
-import com.mfdev.blogapp.repository.user.UserRepository;
-import com.mfdev.blogapp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class BlogService {
-  private final SecurityUtil securityUtil;
+
   private final BlogRepository blogRepository;
-  private final UserRepository userRepository;
-  private final BlogRateRepository blogRateRepository;
   private final TagRepository tagRepository;
+  private final BlogMapper blogMapper;
+  private final RatingRepository ratingRepository;
+  private final RateMapper rateMapper;
 
-  @PreAuthorize("isFullyAuthenticated()")
   public ResponseEntity<?> createBlog(CreateBlogDTO dto) {
-    User user = User.builder()
-            .id(securityUtil.getSessionUserId()).build();
+    Blog blog = blogMapper.createBlogDtoToBlog(dto);
 
-    Long postId = blogRepository
-            .save(new Blog(dto.getContent(), user))
-            .getId();
+    Set<Tag> tags = tagRepository.findAllByNameIn(dto.getTags());
 
-    Set<Long> ids = new HashSet<>();
+    if (tags.isEmpty()) {
+      blog.setTags(dto.getTags().stream()
+              .map(Tag::new)
+              .collect(toSet()));
+    }
 
-    dto.getTags()
-            .forEach(tag -> {
-              try {
-                ids.add(tagRepository.save(new Tag(tag.getName())).getId());
-              } catch (DataIntegrityViolationException e) {
-                String message = Objects.requireNonNull(e.getRootCause()).getMessage();
-                String existingTag = StringUtils.substringBetween(message, "=(", ")");
+    if (tags.size() == dto.getTags().size()) {
+      blog.setTags(tags);
+    }
 
-                log.info("Existing key found: '{}'. Fetching id of tag...", existingTag);
+    if (tags.size() != dto.getTags().size()) {
+      tags.addAll(
+              dto.getTags()
+                      .stream()
+                      .filter(t -> !(tags.stream()
+                              .map(Tag::getName)
+                              .toList().contains(t))
+                      )
+                      .map(Tag::new)
+                      .collect(toSet())
+      );
 
-                Long tagId = tagRepository
-                        .findByName(existingTag).get().getId();
+      blog.setTags(tags);
+    }
 
-                log.info("Id of '{}' is {}. Inserting in ids list...", existingTag, tagId);
-
-                ids.add(tagId);
-              }
-            });
-
-    ids.forEach(id -> tagRepository.addTagToBlog(postId, id));
+    blogRepository.save(blog);
 
     return ResponseEntity.ok("Post has been created");
   }
 
-  @PreAuthorize(
-          "isFullyAuthenticated() " +
-                  "and authentication.name" +
-                  ".equals(@blogRepository.getBlogAuthorUsername(#dto.blogID)) " +
-                  "or hasAuthority('SCOPE_'" +
-                  ".concat(T(com.mfdev.blogapp.entity.user.authority.Authority)" +
-                  ".EDIT_OTHER_BLOG.name()))")
   public ResponseEntity<?> updateBlog(UpdateBlogDTO dto) {
     if (blogRepository.existsById(dto.getBlogID())) {
       blogRepository.updateBlog(dto.getContent(), dto.getBlogID());
-
       return ResponseEntity.ok("Post has been edited");
+    } else {
+      return ResponseEntity.badRequest().body("The post has been deleted or not exists");
     }
-
-    return ResponseEntity
-            .badRequest()
-            .body("The post does not exist or has been deleted");
-
   }
 
-  @PreAuthorize(
-          "isFullyAuthenticated() " +
-                  "and authentication.name" +
-                  ".equals(@blogRepository.getBlogAuthorUsername(#blogID)) " +
-                  "or hasAuthority('SCOPE_'" +
-                  ".concat(T(com.mfdev.blogapp.entity.user.authority.Authority)" +
-                  ".DELETE_OTHER_BLOG.name()))")
   public ResponseEntity<?> deleteBlog(Long blogID) {
     if (blogRepository.existsById(blogID)) {
       blogRepository.deletePost(blogID);
@@ -106,31 +88,25 @@ public class BlogService {
             .body("The post does not exist or has been deleted");
   }
 
-  @PreAuthorize("isFullyAuthenticated()")
-  public ResponseEntity<?> setBlogRate(RateBlogDTO dto) {
-    if (!blogRateRepository.checkVote(
-            dto.getBlogID(),
-            securityUtil.getSessionUsername())) {
+  public ResponseEntity<?> voteForBlog(RateBlogDTO dto) {
+    try {
+      ratingRepository.save(rateMapper.rateBlogDtoToBlogRate(dto));
+    } catch (DataIntegrityViolationException e) {
+      RateType rateType = ratingRepository.findRatingTypeByIdAndUserId(dto.getBlogID(), 1L);
 
-      Long userId = userRepository
-              .getUserId(securityUtil.getSessionUsername());
+      if (rateType.equals(dto.getRateType())) {
+        ratingRepository.deleteRateByUserAndBlog(1L, dto.getBlogID());
+      } else {
+        ratingRepository.updateOnUserIdAndBlogId(dto.getRateType(), 1L, dto.getBlogID());
+      }
 
-      blogRateRepository.makeVote(
-              dto.getRateType().getRate(),
-              dto.getBlogID(),
-              userId);
-
-      return ResponseEntity.ok("Thanks for vote");
     }
 
-    return ResponseEntity
-            .badRequest()
-            .body("You already voted earlier");
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @PreAuthorize("permitAll()")
-  public List<ShortBlogDTO> getUserBlogs(String username, Integer path) {
-    return blogRepository.findAllByUserUsername(
+  public List<ShortBlogProjection> getUserBlogs(String username, Integer path) {
+    return blogRepository.justFind(
             username,
             PageRequest.of(
                     path, 10,
@@ -139,18 +115,15 @@ public class BlogService {
     );
   }
 
-  @PreAuthorize("permitAll()")
-  public List<ShortBlogDTO> getHomePageBlogs(Integer path) {
-    return blogRepository.findBy(PageRequest.of(path, 10));
+  public FullBlogProjection getFullViewBlog(Long blogId) {
+    return blogRepository.findAllById(blogId);
   }
 
-  @PreAuthorize("permitAll()")
-  public FullBlogDTO getBlog(Long blogId) {
+  public ShortBlogProjection getShortViewBlog(Long blogId) {
     return blogRepository.findBlogById(blogId);
   }
 
-  @PreAuthorize("permitAll()")
-  public List<ShortBlogDTO> findBlogsByTags(Set<String> tags, Integer path) {
+  public List<ShortBlogProjection> findBlogsByTags(Set<String> tags, Integer path) {
     Set<Long> idsTags = tagRepository.findIdsTags(tags);
     return blogRepository.findAllByTagsIdIn(idsTags, PageRequest.of(path, 10));
   }
