@@ -1,10 +1,10 @@
 package com.mfdev.blogapp.service.mailsender;
 
-import com.mfdev.blogapp.entity.verificationcode.VerificationCode;
 import com.mfdev.blogapp.entity.user.User;
+import com.mfdev.blogapp.entity.verificationcode.VerificationCode;
 import com.mfdev.blogapp.repository.verificationcode.VerificationCodeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.task.TaskExecutor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,19 +12,18 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
 public class MailSenderService {
   private final JavaMailSender mailSender;
-  private final VerificationCodeRepository codeRepository;
-  private final TaskExecutor taskExecutor;
+  private final VerificationCodeRepository verificationCodeRepository;
 
-  private final String MAIL_SENDER_ADDRESS = System.getenv("MAIL_SENDER_ADDRESS");
+  @Value("${spring.mail.username}")
+  private String MAIL_SENDER_ADDRESS;
 
   @Async
-  public CompletableFuture<ResponseEntity<String>> sendVerificationMail(User user) {
+  public void sendVerificationMail(User user) {
     SimpleMailMessage message = new SimpleMailMessage();
 
     UUID uuid = UUID.randomUUID();
@@ -35,19 +34,15 @@ public class MailSenderService {
     message.setSubject(SUBJECT_TITLE);
     message.setTo(user.getEmail());
 
-    taskExecutor.execute(() ->
-            mailSender.send(message));
+    mailSender.send(message);
 
     VerificationCode verificationCode = new VerificationCode(uuid, user);
-    this.codeRepository.save(verificationCode);
-
-    return CompletableFuture
-            .completedFuture(setSuccessSendMailMessage(user));
+    verificationCodeRepository.save(verificationCode);
   }
 
   private String setMessageToSend(User user, UUID uuid) {
     final String verificationLink =
-            String.format("http://localhost:8080/verify/%s", uuid);
+            String.format("http://localhost:8080/api/v1/account/%s", uuid);
 
     return String.format(
             "Hi, %s!\nClick the link to verify your account: \n%s",
@@ -55,7 +50,7 @@ public class MailSenderService {
     );
   }
 
-  private ResponseEntity<String> setSuccessSendMailMessage(User user) {
+  public ResponseEntity<String> generateSuccessSendMailMessage(User user) {
     return ResponseEntity.ok(
             String.format(
                     "You're almost done!\nWe sent a verification mail to %s",

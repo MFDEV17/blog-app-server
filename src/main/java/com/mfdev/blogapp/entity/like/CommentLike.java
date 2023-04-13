@@ -2,10 +2,7 @@ package com.mfdev.blogapp.entity.like;
 
 import com.mfdev.blogapp.entity.blog.Comment;
 import com.mfdev.blogapp.entity.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +15,10 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LikeComment {
+@Table(indexes = {
+        @Index(columnList = "comment_id, user_id", unique = true)
+})
+public class CommentLike {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
@@ -30,9 +30,4 @@ public class LikeComment {
   @ManyToOne
   @OnDelete(action = CASCADE)
   private User user;
-
-  public LikeComment(Comment comment, User user) {
-    this.comment = comment;
-    this.user = user;
-  }
 }
