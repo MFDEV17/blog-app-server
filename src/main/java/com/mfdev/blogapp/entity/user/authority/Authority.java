@@ -1,8 +1,6 @@
 package com.mfdev.blogapp.entity.user.authority;
 
-import org.springframework.security.core.GrantedAuthority;
-
-public enum Authority implements GrantedAuthority {
+public enum Authority {
   CREATE_BLOG,
   CREATE_COMMENT,
   EDIT_OTHER_COMMENT,
@@ -12,10 +10,4 @@ public enum Authority implements GrantedAuthority {
   EDIT_OTHER_BLOG,
   SET_USER_AUTHORITY,
   BAN_USER;
-
-
-  @Override
-  public String getAuthority() {
-    return name();
-  }
 }
