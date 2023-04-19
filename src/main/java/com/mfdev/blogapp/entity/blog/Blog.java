@@ -1,6 +1,7 @@
 package com.mfdev.blogapp.entity.blog;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mfdev.blogapp.entity.baseentities.BaseEntity;
 import com.mfdev.blogapp.entity.blog.rate.Rating;
 import com.mfdev.blogapp.entity.bookmark.Bookmark;
 import com.mfdev.blogapp.entity.like.BlogLike;
@@ -26,11 +27,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Blog {
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  private Long id;
-
+public class Blog extends BaseEntity {
   @Column(columnDefinition = "text")
   private String content;
 

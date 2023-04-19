@@ -1,5 +1,6 @@
 package com.mfdev.blogapp.entity.user;
 
+import com.mfdev.blogapp.entity.baseentities.BaseEntity;
 import com.mfdev.blogapp.entity.user.authority.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -12,19 +13,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 @Entity(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @DynamicUpdate
-@ToString(of = {"id", "username", "email"})
-public class User {
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  private Long id;
+@ToString(of = {"username", "email"})
+public class User extends BaseEntity {
 
   @Column(unique = true, nullable = false)
   private String username;

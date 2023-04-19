@@ -1,10 +1,11 @@
 package com.mfdev.blogapp.entity.blog;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.mfdev.blogapp.entity.baseentities.BaseEntity;
 import com.mfdev.blogapp.entity.user.User;
-import com.mfdev.blogapp.util.converter.JsonConverter;
-import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,24 +14,16 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
-import java.util.Map;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
 import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
-public class Comment {
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  private Long id;
-
-  @Convert(converter = JsonConverter.class)
+public class Comment extends BaseEntity {
   @Column(columnDefinition = "text")
-  Map<String, Object> comment;
+  String comment;
 
   @ManyToOne
   @OnDelete(action = CASCADE)
@@ -46,10 +39,4 @@ public class Comment {
 
   @UpdateTimestamp
   private Date dateUpdate;
-
-  public Comment(Map<String, Object> comment, User user, Blog blog) {
-    this.comment = comment;
-    this.user = user;
-    this.blog = blog;
-  }
 }

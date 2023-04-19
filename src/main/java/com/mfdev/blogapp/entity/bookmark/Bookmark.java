@@ -1,6 +1,7 @@
 package com.mfdev.blogapp.entity.bookmark;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.mfdev.blogapp.entity.baseentities.BaseEntity;
 import com.mfdev.blogapp.entity.blog.Blog;
 import com.mfdev.blogapp.entity.user.User;
 import jakarta.persistence.*;
@@ -19,11 +20,7 @@ import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 @Table(indexes = {
         @Index(columnList = "blog_id, user_id", unique = true)
 })
-public class Bookmark {
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  private Long id;
-
+public class Bookmark extends BaseEntity {
   @ManyToOne
   @OnDelete(action = CASCADE)
   private User user;
